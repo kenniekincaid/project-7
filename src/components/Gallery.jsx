@@ -1,11 +1,19 @@
 import React, { Component } from 'react';
+import Photo from './Photo';
 
 class Gallery extends Component {
     render() { 
+        const photos = this.props.photos.map(photo => {
+            return (<Photo url={photo} />);
+        });
+        
         return (
-            <li>
-                <img src="https://farm5.staticflickr.com/4334/37032996241_4c16a9b530.jpg" alt="" />
-            </li>
+            <div className="photo-container">
+                <h2>Results</h2>
+                <ul>
+                    {photos}
+                </ul>
+            </div>
          );
     }
 }

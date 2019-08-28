@@ -4,12 +4,14 @@ class Navigation extends Component {
     // state = {  }
     render() {
         return (
-            <ul>
-                <li><a href='#'>Art</a></li>
-                <li><a href='#'>Music</a></li>
-                <li><a href='#'>Technology</a></li>
-                {/* <li><a href='#'>Food</a></li> */}
-            </ul>
+            <nav className="main-nav">
+                <ul>
+                    <li><a href='#'>Art</a></li>
+                    <li><a href='#'>Music</a></li>
+                    <li><a href='#'>Technology</a></li>
+                    {/* <li><a href='#'>Food</a></li> */}
+                </ul>
+            </nav>
          );
     }
 }
