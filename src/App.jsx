@@ -14,19 +14,12 @@ import axios from 'axios';
 import apiKey from './config.js';
 
 class App extends Component {
-//Use AXIOS to make a GET request to an API (Application Programming Interface)...(apps communicate through a URL.)
-//NOTE: API's alow apps to retrieve or send data to and from databses or web services.
-  componentDidMount() {
-    axios.get(`https://www.flickr.com/services/api/explore/flickr.photos.search/?results=24&api_key=${apiKey}`)
-      .then(response => {
-        console.log(response.data);//output the API data response to the browser's console.
-        this.setState({
-          items: response.data.data
-        })
-      })
-      .catch(error => {
-        console.log('Error fetching and parsing data', error);
-      });
+  constructor() {
+    super()
+    this.state = {
+      images: [],
+      isloading: true
+    };
   }
 
   render() {
@@ -36,23 +29,39 @@ class App extends Component {
       "https://farm5.staticflickr.com/4343/37175099045_0d3a249629.jpg",
       "https://farm5.staticflickr.com/4425/36337012384_ba3365621e.jpg"
     ];
-      return (
-        <div className="container">
-          <Search />
-          <Navigation />
-          <Gallery photos={hardCodedUrls} />
-        </div>
-      );
+    return (
+      <div className="container">
+        <Search />
+        <Navigation />
+        <Gallery photos={hardCodedUrls} />
+      </div>
+    );
+  }
+
+//Use AXIOS to make a GET request to an API (Application Programming Interface)...(apps communicate through a URL.)
+//NOTE: API's alow apps to retrieve or send data to and from databses or web services.
+  componentDidMount() {
+    //Create the search feature with query parameter and a default parameter
+    const performSearch = (query = "hair color") => {
+      //fetch data from flickr
+      axios.get(`https://www.flickr.com/services/api/explore/flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
+        .then(response => {
+          console.log(response.data);//output the API data response to the browser's console.
+          this.setState({
+            pics: response.data.photos.photo, //pictures equal to data array
+            //initializes a loading state to display a loading message
+            loading: false
+          });
+        })
+        .catch(error => { //outputs a message to the consoleif axios fails to retrieve data
+          console.log('Error fetching and parsing data', error);
+            if(error.response === 404) {
+              return({ NotFound })
+            }
+        });
+    }
   }
 }
-
-//RETURN Data from the API...
-
-//DO things with that data in React App...
-
-
-
-
 
 //Extra Credit Button loader... Needs to be tested.
 // class ButtonLoader extends Component {

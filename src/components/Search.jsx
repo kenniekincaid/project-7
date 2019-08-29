@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
 
 class Search extends Component {
-    // state = {
-    //     value: '' //Created a value state
-    // };
+    // getSearchResults = (e) => {
+    //     e.preventDefault();
+    //     const search = 
+    // }
+
+    state = { //receives user input and renders images
+        value: '' //Created a value state
+    };
     // handleValueChange = (e) => {
     //     this.setState({ value: e.target.value }); //wrote a function to update the value state
     // }
