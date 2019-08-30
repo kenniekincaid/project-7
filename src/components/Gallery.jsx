@@ -3,8 +3,9 @@ import Photo from './Photo';
 
 class Gallery extends Component {
     render() { 
-        const photos = this.props.photos.map(photo => {
-            return (<Photo url={photo} />);
+        const photos = this.props.photos.map((photo) => { 
+            // console.log(photo);
+            return (<Photo key={photo.key} url={`https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`} />);
         });
         
         return (

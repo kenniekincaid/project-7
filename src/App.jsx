@@ -29,37 +29,45 @@ class App extends Component {
       "https://farm5.staticflickr.com/4343/37175099045_0d3a249629.jpg",
       "https://farm5.staticflickr.com/4425/36337012384_ba3365621e.jpg"
     ];
+
     return (
       <div className="container">
         <Search />
         <Navigation />
-        <Gallery photos={hardCodedUrls} />
+        <Gallery photos={this.state.images} />
       </div>
     );
   }
 
-//Use AXIOS to make a GET request to an API (Application Programming Interface)...(apps communicate through a URL.)
-//NOTE: API's alow apps to retrieve or send data to and from databses or web services.
-  componentDidMount() {
-    //Create the search feature with query parameter and a default parameter
-    const performSearch = (query = "hair color") => {
-      //fetch data from flickr
-      axios.get(`https://www.flickr.com/services/api/explore/flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
-        .then(response => {
-          console.log(response.data);//output the API data response to the browser's console.
-          this.setState({
-            pics: response.data.photos.photo, //pictures equal to data array
-            //initializes a loading state to display a loading message
-            loading: false
-          });
-        })
-        .catch(error => { //outputs a message to the consoleif axios fails to retrieve data
-          console.log('Error fetching and parsing data', error);
-            if(error.response === 404) {
-              return({ NotFound })
-            }
+
+  //Use AXIOS to make a GET request to an API (Application Programming Interface)...(apps communicate through a URL.)
+  //NOTE: API's alow apps to retrieve or send data to and from databses or web services.
+
+  performSearch(query = "orangeflowers") {
+    //fetch data from flickr
+    console.log('Executing query');
+    const url = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`;
+    console.log(url);
+    axios.get(url)
+      .then(response => {
+        console.log(response.data);//output the API data response to the browser's console.
+        this.setState({
+          images: response.data.photos.photo, //pictures equal to data array
+          //initializes a loading state to display a loading message
+          loading: false
         });
-    }
+      })
+      .catch(error => { //outputs a message to the consoleif axios fails to retrieve data
+        console.log('Error fetching and parsing data', error);
+          if(error.response === 404) {
+            return({ NotFound })
+          }
+      });
+  }
+
+  componentDidMount() {
+    this.performSearch();
+      
   }
 }
 
