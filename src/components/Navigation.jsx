@@ -16,10 +16,10 @@ class Navigation extends Component {
                     <li><NavLink to="/search/art">Art</NavLink></li>
                     <li><NavLink to="/search/nature">Nature</NavLink></li>
                     <li><NavLink to="/search/universe">Universe</NavLink></li>
-                    {/* <li><a href='https://www.flickr.com/search/?text=technology' target='_self'>Technology</a></li>
-                    <li><a href='https://www.flickr.com/search/?text=food' target='_self'>Food</a></li>
-                    <li><a href='https://www.flickr.com/search/?text=culture' target='_self'>Culture</a></li>
-                    <li><a href='https://www.flickr.com/search/?text=liberty' target='_self'>Liberty</a></li> */}
+                    <li><NavLink to="/search/technology">Technology</NavLink></li>
+                    <li><NavLink to="/search/food">Food</NavLink></li>
+                    <li><NavLink to="/search/culture">Culture</NavLink></li>
+                    <li><NavLink to="/search/liberty">Liberty</NavLink></li>
                 </ul>
             </nav>
             </Router>

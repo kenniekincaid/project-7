@@ -44,7 +44,7 @@ a {
 
 .search-form button {
   outline: none;
-  background-color: #000000;
+  background-color:  #488d8f;
   border: 1px solid rgb(250, 248, 248);
   padding: 0px 15px;
   border-radius: 0 0.35em 0.35em 0;
@@ -69,7 +69,7 @@ input {
 
 .main-nav a {
   display: block;
-  background: #000000;
+  background: #488d8f;
   border-radius: 3px;
   padding: 5px;
   color: #fff;
@@ -78,7 +78,8 @@ input {
 .main-nav .active,
 .main-nav a:hover,
 .search-form button:hover {
-  background-color: #275270;
+  background-color: #2f374d;
+  color: white;
 }
 
 .photo-container ul {

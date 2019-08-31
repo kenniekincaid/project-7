@@ -4,7 +4,6 @@ import {
   Route,
   Switch
 } from 'react-router-dom';
-// import logo from './logo.svg';
 import './App.css';
 import Search from './components/Search.jsx';
 import Navigation from './components/Navigation.jsx';
@@ -39,13 +38,12 @@ class App extends Component {
     );
   }
 
-
   //Use AXIOS to make a GET request to an API (Application Programming Interface)...(apps communicate through a URL.)
   //NOTE: API's alow apps to retrieve or send data to and from databses or web services.
 
   performSearch(query = "orangeflowers") {
     //fetch data from flickr
-    console.log('Executing query');
+    // console.log('Executing query');
     const url = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`;
     console.log(url);
     axios.get(url)
@@ -55,7 +53,7 @@ class App extends Component {
           images: response.data.photos.photo, //pictures equal to data array
           //initializes a loading state to display a loading message
           loading: false
-        });
+        }); console.log(response.data.photos.photo);//returns the default perform search for orange flowers
       })
       .catch(error => { //outputs a message to the consoleif axios fails to retrieve data
         console.log('Error fetching and parsing data', error);
@@ -67,71 +65,50 @@ class App extends Component {
 
   componentDidMount() {
     this.performSearch();
-      
+     
   }
 }
 
 //Extra Credit Button loader... Needs to be tested.
-// class ButtonLoader extends Component {
-//   state = {
-//     loading : false
-//   }
+class ButtonLoader extends Component {
+  state = {
+    loading : false
+  }
 
-//   fetchData = () =>{
-//     this.setState({ loading : true});
-//     setTimeout(() => {
-//       this.setState({loading : false});
-//     }, 2000)
-//   }
+  fetchData = () =>{
+    this.setState({ loading : true});
+    setTimeout(() => {
+      this.setState({loading : false});
+    }, 2000)
+  }
 
-//   render() {
-//     const {loading} = this.state;
-//     return (
-//       <div style={{marginTop : '60px'}}>
-//         <button className="button" onClick={this.fetchData} disabled={loading}>
-//           { loading && <img className="fa fa-refresh fa-spin"></img> }
-//           { loading && <span>Loading Data from Server</span> }
-//           { loading && <span>Fetching Data from Server</span>}
-//         </button>
-//       </div>
-//     );
-//   }
-// }
+  render() {
+    const {loading} = this.state;
+    return (
+      <div style={{marginTop : '60px'}}>
+        <button className="button" onClick={this.fetchData} disabled={loading}>
+          { loading && <img className="fa fa-refresh fa-spin"></img> }
+          { loading && <span>Loading Data from Server</span> }
+          { loading && <span>Fetching Data from Server</span>}
+        </button>
+      </div>
+    );
+  }
+}
 
-// export default ButtonLoader;
-
-// const App = () => (
-//   <Router>
-//     <div className="container">
-//       <Switch>
-//         <Route path="/search" component={Search} />
-//         <Route path="/navigation" component={Navigation} />
-//         <Route path="/gallery" component={Gallery} />
-//         <Route component={NotFound} /> //Extra Credit: Friendly user Message for no results found
-//       </Switch>
-//     </div>
-//   </Router>
-// );
-
-// function App() {
-//   return (
-//     <body>
-//       <div className="container">
-//         <Search />
-//       </div>
-
-//       <nav className="main-nav">
-//         <Navigation />
-//       </nav>
-
-//       <div className="photo-container">
-//         <h2>Results</h2>
-//           <ul>
-//             <Gallery />
-//           </ul>
-//       </div>
-//     </body>
-//   );
-// }
+function Routes(){
+  return(
+    <Router>
+      <div className="container">
+        <Switch>
+          <Route path="/search" component={Search} />
+          <Route path="/navigation" component={Navigation} />
+          <Route path="/gallery" component={Gallery} />
+          <Route component={NotFound} />
+        </Switch>
+      </div>
+    </Router>
+  )
+}
 
 export default App;
