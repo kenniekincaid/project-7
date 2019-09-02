@@ -36,6 +36,10 @@ a {
   border: 1px solid rgb(250, 248, 248);
 }
 
+p {
+  color: white;
+}
+
 .search-form {
   max-width: 460px;
   display: flex;
