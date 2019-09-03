@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 
-//ISSUE: Search button is not yet functional.
-//WHAT WORKS: The Search field + Enter renders photos.
-
 class Search extends Component {
     state = { //receives user input and renders images
         searchText: '' //Created a value state

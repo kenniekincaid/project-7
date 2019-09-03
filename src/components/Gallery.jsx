@@ -6,31 +6,39 @@ import FileNotFound from './FileNotFound';
 //WHAT WORKS: Default Gallery shows and Search field works when enter key pressed after input. Button not working.
 
 class Gallery extends Component {
-    render() { 
-        let results = this.props.photos.map((photo) => { 
-            let photos = (<Photo key={photo.id} url={`https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`} />); //jpg|gif|png
 
-            // console.log(photo);
-            return (photos);
-            // console.log(photos);
-        //HOW TO MAKE THE FOLLOWING WORK? It will render NO RESULTS FOUND to the DOM.
-            // if(photos < 0) {
-            //     photos= <FileNotFound />
-            // }
+    handleHeader(){
+        return this.props.location.pathname.split('/')[2] //Ex: search=1, art=2
+    }
+
+    componentDidMount(){
+        this.props.search(this.handleHeader())
+    }
+
+    render() { 
+        let title = this.handleHeader()
+        let results = this.props.photos.map((photo) => { 
+            let photos = (<Photo key={photo.id} url={`https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg|png`} />); //jpg|gif|png
+
+        return (photos);
         });
-        let photos;
-        if(photos === 0) {
-            photos= <FileNotFound />
+            
+        if(results.length > 0){
+            return(
+                <div className="photo-container">
+                    <h2>{title}</h2>
+                    <ul>
+                        {results}
+                    </ul>
+                </div>
+            );
+        } else {
+            return(
+                <div className="photo-container">
+                    <h2>No Search Results</h2>
+                </div>
+            );
         }
-        
-        return (
-            <div className="photo-container">
-                <h2>Results</h2>
-                <ul>
-                    {results}
-                </ul>
-            </div>
-         );
     }
 }
  
