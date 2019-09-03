@@ -27,15 +27,12 @@ class App extends Component {
         {/* pass in the performSearch function... see performSearch section */}
         <Search onSearch={this.performSearch}/>
           {/* checks the url to find a path */}
-          <Router> //checks the url to find a path
+          <Router>
             <Navigation />
             <Switch>
-              <Route path="/search/:searchword" exact component={(props) => (
-                  <Gallery photos={this.state.images} {...props} search={this.performSearch}/> //{...props} is a spread operator; turns {1, 2, 3,{4, 5}} into {1, 2, 3, 4, 5}
-              )}/>
-              <Route component={(props) => (
-                  <Gallery photos={this.state.images} {...props} search={this.performSearch}/>
-              )}/>
+              <Route path="/search/:searchword" component={(props) => (
+                  <Gallery photos={this.state.images} {...props} search={this.performSearch}/> 
+              )}/>                         
             </Switch>
         </Router>
       </div>
