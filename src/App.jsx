@@ -10,6 +10,7 @@ import FileNotFound from './components/FileNotFound.jsx';
 import axios from 'axios';
 import apiKey from './config.js';
 
+//APP STARTS
 class App extends Component {
   constructor(props) {
     super(props)
@@ -19,16 +20,18 @@ class App extends Component {
     };
   }
 
-  /**RENDERING SEARCH, NAVIGATION, and GALLERY */
+  /**APP RENDERS SEARCH, NAVIGATION, and GALLERY */
   render() {
       return (
       <div className="container">
+        {/* pass in the performSearch function... see performSearch section */}
         <Search onSearch={this.performSearch}/>
-          <Router>
+          {/* checks the url to find a path */}
+          <Router> //checks the url to find a path
             <Navigation />
             <Switch>
               <Route path="/search/:searchword" exact component={(props) => (
-                  <Gallery photos={this.state.images} {...props} search={this.performSearch}/>
+                  <Gallery photos={this.state.images} {...props} search={this.performSearch}/> //{...props} is a spread operator; turns {1, 2, 3,{4, 5}} into {1, 2, 3, 4, 5}
               )}/>
               <Route component={(props) => (
                   <Gallery photos={this.state.images} {...props} search={this.performSearch}/>
@@ -39,19 +42,18 @@ class App extends Component {
     );
   }
 
+  componentDidMount() {
+    this.performSearch(); //this will call performSearch
+  }
 
-  // componentDidMount() {
-  //   this.performSearch();
-  // }
-
-  performSearch = (query = 'orangeflowers') => {
+  performSearch = (query = 'orangeflowers') => { //arrow functions do not have '{this}'
     // debugger// console.log('Executing query');
     const url = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`;
     // console.log(url);
-    axios.get(url)
-      .then(response => {
+    axios.get(url) //returns a promise
+      .then(response => { //response stores whatever flickr sends back.
         // console.log(response.data);//output the API data response to the browser's console.
-        this.setState({
+        this.setState({ //internal to react; whenever called, it triggers 'this'. When called, this.render() is app.render here.
           images: response.data.photos.photo, //pictures equal to data array
           //initializes a loading state to display a loading message
         }); 

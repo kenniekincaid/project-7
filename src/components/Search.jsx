@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 
-class Search extends Component {
+export default class Search extends Component {
     state = { //receives user input and renders images
         searchText: '' //Created a value state
     }
 
     onSearchChange = e => {
-        this.setState({ searchText: e.target.value });
+        this.setState({ searchText: e.target.value });//Search on Search bar input
     }
 
     handleSubmit = e => {
         e.preventDefault();
-        this.props.onSearch(this.query.value);
+        this.props.onSearch(this.query.value);//equal to: app.onSearch(this.query.value)
         e.currentTarget.reset();
     }
     
@@ -34,5 +34,3 @@ class Search extends Component {
         );
     }
 }
- 
-export default Search;

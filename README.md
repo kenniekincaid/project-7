@@ -1,3 +1,15 @@
+Project 7 - React Gallery App - By: Kendra Roberson
+
+GOAL: I am shooting for Exceeds Expectations with this project.
+
+ABOUT: In this project, I will use JavaScript and JSX to build out picture gallery components, use React Router to set up routes and a search page, use Axios to fetch data from the Flickr API to display images in my app, along with using logic to handle certain functionalities.
+
+NOTE: To Fetch Data: You will need to request an API key of your own to run this. My API Key is hidden from pubic view in my config.js file along with my node_modules by hiding the config.js file in the .gitignore file.  You will need to use npm start command to run the app on the local host 3000.
+
+SPECIAL FEATURES: There aren't many. I added a blue background image that I thought pictures would pop on, I added the ability to view the picture in a new browser window when the photo is clicked. There's a 404 error message produced with an icon. My loading indicator is working - which is just text at this point. A 'No Results' message is produced in the console if no images are found with the search criteria used. My search field and buttons work along with my Navigation buttons - of which I have 7 instead of 3.
+
+FINAL THOUGHTS: It is really cool to have only ONE page rendering the job of many pages! Routing/Wiring the thing up to produce images was the biggest obstacle for me, along with a little struggle with 'this', props, and state. Other than that, it seemed pretty straightforward.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

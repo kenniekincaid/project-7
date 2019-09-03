@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 
-class Navigation extends Component {
+export default class Navigation extends Component {
     state = ''
     render() {
         return (
-            <React.Fragment>
+            <React.Fragment> {/**use this in place of divs to prevent multiple divs inside of each other */}
                 <nav className="main-nav">
                     <ul>
                         <li><NavLink active="active" to="/search/art">Art</NavLink></li>
@@ -21,5 +21,3 @@ class Navigation extends Component {
         );
     }
 }
-
-export default Navigation;
