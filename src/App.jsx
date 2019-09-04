@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { Route, Switch } from 'react-router-dom';
-import { NavLink } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import './App.css';
 import Search from './components/Search.jsx';
 import Navigation from './components/Navigation.jsx';
@@ -10,38 +9,71 @@ import FileNotFound from './components/FileNotFound.jsx';
 import axios from 'axios';
 import apiKey from './config.js';
 
+
 //APP STARTS
 class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
       images: [],
-      isloading: false
+      isloading: false,
+      searchWord: '',
+      searchArt: [],
+      searchNature: [],
+      searchUniverse: [],
+      searchTechnology: [],
+      searchFood: [],
+      searchCulture: [],
+      searchLiberty: []
     };
   }
 
   /**APP RENDERS SEARCH, NAVIGATION, and GALLERY */
-  render() {
-      return (
-      <div className="container">
-        {/* pass in the performSearch function... see performSearch section */}
-        <Search onSearch={this.performSearch}/>
-          {/* checks the url to find a path */}
-          <Router>
-            <Navigation />
+  render(){
+      return(
+        <Router>
+          <div className="container">
             <Switch>
-              <Route path="/search/:searchword" component={(props) => (
-                  <Gallery photos={this.state.images} {...props} search={this.performSearch}/> 
-              )}/>                         
+              <Route exact path="/" render={ (props) => <Redirect to="/search/art" />} />
+              <Route path="search/art" render={() => this.state.loading
+              ? <p>Loading...</p>
+              : <Gallery photos={this.state.images}/>
+              }/>
+
+<Gallery photos={this.state.images} />
+        { 
+          (this.state.loading)
+          ? <p>Loading...</p>
+          : <Gallery photos={this.state.images} />
+        }
+
+              <Route path="/search/:searchword" exact component={(props) => {
+                const searchWord = props.match.params.searchword;
+                if(searchWord !== this.state.searchWord) {
+                  this.setState((state)=> {
+                    return {searchWord: searchWord};
+                  });
+                  this.performSearch(searchWord);
+                }
+                return(
+                  <React.Fragment>
+                    <Search onSearch={this.performSearch} />
+                    <Navigation onClick={this.performSearch} />
+                    <Gallery photos={this.state.images} {...props}/>
+                  </React.Fragment> 
+                )
+              }}/>
+              <Route component={ FileNotFound } />
+              {/* )}/>*/}
             </Switch>
+          </div>
         </Router>
-      </div>
     );
   }
 
-  componentDidMount() {
-    this.performSearch(); //this will call performSearch
-  }
+  // componentDidMount() {
+  //   this.performSearch(); //this will call performSearch
+  // }
 
   performSearch = (query = 'orangeflowers') => { //arrow functions do not have '{this}'
     // debugger// console.log('Executing query');
