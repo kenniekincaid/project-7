@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Photo from './Photo';
 
+
 export default class Gallery extends Component {
     // constructor(props) {
     //     super(props)
@@ -10,7 +11,8 @@ export default class Gallery extends Component {
     //   }
    
     handleHeader(){
-        return this.props.location.pathname.split('/')[2] //to search based on second path; Ex: search=1, art=2 (/search/art)...
+        const title= this.props.location.pathname.split('/')[2]
+        return title; //to search based on second path; Ex: search=1, art=2 (/search/art)...
     }
 
     render() { 

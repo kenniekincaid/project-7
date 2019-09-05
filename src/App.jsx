@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import './App.css';
 import Search from './components/Search.jsx';
 import Navigation from './components/Navigation.jsx';
@@ -15,16 +16,17 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      results: [],
       images: [],
-      isloading: false,
+      isloading: true,
       searchWord: '',
-      searchArt: [],
-      searchNature: [],
-      searchUniverse: [],
-      searchTechnology: [],
-      searchFood: [],
-      searchCulture: [],
-      searchLiberty: []
+      // searchArt: [],
+      // searchNature: [],
+      // searchUniverse: [],
+      // searchTechnology: [],
+      // searchFood: [],
+      // searchCulture: [],
+      // searchLiberty: []
     };
   }
 
@@ -33,38 +35,33 @@ class App extends Component {
       return(
         <Router>
           <div className="container">
+          {/*Header*/}
+            <Search onSearch={this.performSearch} />
+            <Navigation onClick={this.performSearch} />
             <Switch>
-              <Route exact path="/" render={ (props) => <Redirect to="/search/art" />} />
-              <Route path="search/art" render={() => this.state.loading
-              ? <p>Loading...</p>
-              : <Gallery photos={this.state.images}/>
-              }/>
-
-<Gallery photos={this.state.images} />
-        { 
-          (this.state.loading)
-          ? <p>Loading...</p>
-          : <Gallery photos={this.state.images} />
-        }
-
-              <Route path="/search/:searchword" exact component={(props) => {
-                const searchWord = props.match.params.searchword;
-                if(searchWord !== this.state.searchWord) {
-                  this.setState((state)=> {
-                    return {searchWord: searchWord};
-                  });
-                  this.performSearch(searchWord);
-                }
-                return(
-                  <React.Fragment>
-                    <Search onSearch={this.performSearch} />
-                    <Navigation onClick={this.performSearch} />
-                    <Gallery photos={this.state.images} {...props}/>
-                  </React.Fragment> 
-                )
-              }}/>
-              <Route component={ FileNotFound } />
-              {/* )}/>*/}
+                <Route exact path="/" render={ (props) => <Redirect to="/search/art" />} />
+                <Route path="/search/:searchword" exact component={(props) => {
+                  const searchWord = props.match.params.searchword;
+                  if(searchWord !== this.state.searchWord) {
+                    this.setState((state)=> {
+                      return {searchWord: searchWord};
+                    });
+                    this.performSearch(searchWord);
+                  }
+                  return(
+                    <React.Fragment>
+                      
+                      <Gallery photos={this.state.images} {...props}/>
+                    </React.Fragment> 
+                  )
+                }}/>
+                <Route component={ FileNotFound } />
+                <Route exact path="search/art" render={() =>
+                  this.state.loading
+                  ? <p>Loading...</p>
+                  : <Gallery photos={this.state.images}/>
+                }/>
+                {/* )}/>*/}
             </Switch>
           </div>
         </Router>
@@ -72,10 +69,18 @@ class App extends Component {
   }
 
   // componentDidMount() {
-  //   this.performSearch(); //this will call performSearch
+    // this.performSearch(); //this will call performSearch
+    // this.performSearch("art");
+    // this.performSearch("nature");
+    // this.performSearch("Universe");
+    // this.performSearch("Technology");
+    // this.performSearch("Food");
+    // this.performSearch("Culture");
+    // this.performSearch("Liberty");
   // }
 
   performSearch = (query = 'orangeflowers') => { //arrow functions do not have '{this}'
+
     // debugger// console.log('Executing query');
     const url = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`;
     // console.log(url);
@@ -88,7 +93,7 @@ class App extends Component {
         }); 
         console.log(response.data.photos.photo);//returns the default perform search for orange flowers
         this.setState({
-          isloading: false
+          isloading: true
         });
       })
       .catch(error => { //outputs a message to the consoleif axios fails to retrieve data
