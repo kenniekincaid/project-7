@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router';
 
-export default class Search extends Component {
+class Search extends Component {
     state = { //receives user input and renders images
         searchText: '' //Created a value state
     }
@@ -11,8 +12,11 @@ export default class Search extends Component {
 
     handleSubmit = e => {
         e.preventDefault();
-        this.props.onSearch(this.query.value);//equal to: app.onSearch(this.query.value)
+        let searchWord = this.query.value;
+        this.props.onSearch(searchWord);//equal to: app.onSearch(this.query.value)
         e.currentTarget.reset();
+        let path = `/search/${searchWord}`;
+        this.props.history.push(path);
     }
     
     render() { //Video: Displaying the Search Results
@@ -34,3 +38,6 @@ export default class Search extends Component {
         );
     }
 }
+
+// export default Search;
+export default withRouter(Search);

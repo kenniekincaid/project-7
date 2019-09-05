@@ -36,7 +36,7 @@ export default class Gallery extends Component {
         } else {
             return(
                 <div className="photo-container">
-                    <h2>No Search Results</h2>
+                    <h2>No search results.</h2>
                 </div>
             );
         }

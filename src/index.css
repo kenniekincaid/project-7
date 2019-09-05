@@ -114,6 +114,9 @@ input {
 
 .photo-container li:hover img {
   transform: scale(1.65);
+  /* opacity: 0.3; */
+  /* border:  #d7dbdf; */
+  /* border:1px solid black; */
 }
 
 .photo-container .not-found {
