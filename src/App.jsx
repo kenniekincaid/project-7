@@ -20,13 +20,6 @@ class App extends Component {
       images: [],
       isloading: true,
       searchWord: '',
-      // searchArt: [],
-      // searchNature: [],
-      // searchUniverse: [],
-      // searchTechnology: [],
-      // searchFood: [],
-      // searchCulture: [],
-      // searchLiberty: []
     };
   }
 
@@ -35,10 +28,10 @@ class App extends Component {
       return(
         <Router>
           <div className="container">
-          {/*Header*/}
             <Search onSearch={this.performSearch} />
             <Navigation onClick={this.performSearch} />
             <Switch>
+              {/*SEARCH ROUTES*/}
                 <Route exact path="/" render={ (props) => <Redirect to="/search/art" />} />
                 <Route path="/search/:searchword" exact component={(props) => {
                   const searchWord = props.match.params.searchword;
@@ -52,44 +45,37 @@ class App extends Component {
                   )
                 }}/>
                 <Route component={ FileNotFound } />
-                {/* <Route exact path="search/art" render={() =>
-                  this.state.loading
-                  ? <p>Loading...</p>
-                  : <Gallery photos={this.state.images}/> */}
-                }/>
-                {/* )}/>*/}
+                <Route path="/" render={(props) =>
+                  this.state.loading ?(
+                    <p>Loading...</p>
+                  ) : (
+                    <Gallery photos={this.state.images} {...props}/>
+                  )
+                  } />
             </Switch>
           </div>
         </Router>
     );
   }
 
-  performSearch = (query = 'orangeflowers') => { //arrow functions do not have '{this}'
-
-    // debugger// console.log('Executing query');
+  performSearch = (query = 'orangeflowers') => {
     const url = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`;
-    // console.log(url);
-    axios.get(url) //Perform a GET Request... returns a promise
-      .then(response => { //response stores whatever flickr sends back.
-        // console.log(response.data);//output the API data response to the browser's console.
-        this.setState({ //internal to react; whenever called, it triggers 'this'. When called, this.render() is app.render here.
-          images: response.data.photos.photo, //pictures equal to data array
-          //initializes a loading state to display a loading message
-        }); 
-        console.log(response.data.photos.photo);//returns the default perform search for orange flowers
+ 
+    axios.get(url)
+      .then(response => {
         this.setState({
+          images: response.data.photos.photo,
           searchWord: query,
           isloading: true
-
-
-        });
+        }); 
+        console.log(response.data.photos.photo);
       })
-      .catch(error => { //outputs a message to the consoleif axios fails to retrieve data
+      .catch(error => {
         console.log('Error fetching and parsing data', error);
           if(error) {
               this.setState({
                 error: false
-              }); //error message to show in the browser
+              });
           } else if (error.repsonse === 500) {
             console.log('Error 500 - Internal Server Error');
           }

@@ -109,14 +109,11 @@ input {
   width: 100%;
   transform: scale(1.25);
   transition: transform 1.25s;
-  border: #d7dbdf;
+  border: #ff07c1 5px;
 }
 
 .photo-container li:hover img {
   transform: scale(1.65);
-  /* opacity: 0.3; */
-  /* border:  #d7dbdf; */
-  /* border:1px solid black; */
 }
 
 .photo-container .not-found {
@@ -130,6 +127,7 @@ input {
 
   .photo-container li {
     margin: auto;
+    /* border: white: */
   }
 }
 
