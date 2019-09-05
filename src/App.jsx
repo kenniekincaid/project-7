@@ -18,7 +18,7 @@ class App extends Component {
     this.state = {
       results: [],
       images: [],
-      isloading: true,
+      isLoading: false,
       searchWord: '',
     };
   }
@@ -30,6 +30,7 @@ class App extends Component {
           <div className="container">
             <Search onSearch={this.performSearch} />
             <Navigation onClick={this.performSearch} />
+            {this.state.isLoading ? (<p>Loading...</p>) : (Switch)}
             <Switch>
               {/*SEARCH ROUTES*/}
                 <Route exact path="/" render={ (props) => <Redirect to="/search/art" />} />
@@ -45,14 +46,7 @@ class App extends Component {
                   )
                 }}/>
                 <Route component={ FileNotFound } />
-                <Route path="/" render={(props) =>
-                  this.state.loading ?(
-                    <p>Loading...</p>
-                  ) : (
-                    <Gallery photos={this.state.images} {...props}/>
-                  )
-                  } />
-            </Switch>
+            </Switch> 
           </div>
         </Router>
     );
@@ -60,13 +54,16 @@ class App extends Component {
 
   performSearch = (query = 'orangeflowers') => {
     const url = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`;
- 
+    // debugger
+    this.setState({
+      isLoading: true
+    });
     axios.get(url)
       .then(response => {
         this.setState({
           images: response.data.photos.photo,
           searchWord: query,
-          isloading: true
+          isLoading: false
         }); 
         console.log(response.data.photos.photo);
       })

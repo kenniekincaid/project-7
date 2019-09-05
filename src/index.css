@@ -109,7 +109,6 @@ input {
   width: 100%;
   transform: scale(1.25);
   transition: transform 1.25s;
-  border: #ff07c1 5px;
 }
 
 .photo-container li:hover img {
@@ -127,7 +126,6 @@ input {
 
   .photo-container li {
     margin: auto;
-    /* border: white: */
   }
 }
 
