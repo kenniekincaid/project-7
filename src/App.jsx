@@ -20,20 +20,22 @@ class App extends Component {
       images: [],
       isLoading: false,
       searchWord: '',
+      error: false,
+      performSearch: false
     };
   }
 
   /**APP RENDERS SEARCH, NAVIGATION, and GALLERY */
-  render(){
+  render(props){
+
       return(
         <Router>
           <div className="container">
             <Search onSearch={this.performSearch} />
             <Navigation onClick={this.performSearch} />
-            {this.state.isLoading ? (<p>Loading...</p>) : (Switch)}
-            <Switch>
-              {/*SEARCH ROUTES*/}
-                <Route exact path="/" render={ (props) => <Redirect to="/search/art" />} />
+            {this.state.isLoading ? (<p>Loading...</p>) : (
+              <Switch>
+                <Route exact path="/" render={ (props) => <Redirect to="/search/" />} />
                 <Route path="/search/:searchword" exact component={(props) => {
                   const searchWord = props.match.params.searchword;
                   if(searchWord !== this.state.searchWord) {
@@ -46,18 +48,24 @@ class App extends Component {
                   )
                 }}/>
                 <Route component={ FileNotFound } />
-            </Switch> 
+              </Switch>
+            )}
           </div>
         </Router>
-    );
+      );
   }
 
-  performSearch = (query = 'orangeflowers') => {
-    const url = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`;
-    // debugger
+  componentDidMount(){
     this.setState({
       isLoading: true
     });
+  }
+
+  // const loadTrue = (this.setState({ isLoading: true }));
+
+  performSearch = (query = 'orangeflowers') => {
+    const url = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`;
+    
     axios.get(url)
       .then(response => {
         this.setState({
@@ -70,9 +78,9 @@ class App extends Component {
       .catch(error => {
         console.log('Error fetching and parsing data', error);
           if(error) {
-              this.setState({
-                error: false
-              });
+            this.setState({
+              error: false
+            });
           } else if (error.repsonse === 500) {
             console.log('Error 500 - Internal Server Error');
           }

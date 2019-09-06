@@ -4,9 +4,10 @@ import Photo from './Photo';
 
 class Gallery extends Component {
      
+    //Handler to search based on the changing pathname, ex: art=[2].
     handleHeader(){
         const title= this.props.location.pathname.split('/')[2]
-        return title; //to search based on second path; Ex: search=1, art=2 (/search/art)...
+        return title;
     }
 
     render() { 

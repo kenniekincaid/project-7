@@ -3,11 +3,13 @@ import { withRouter } from 'react-router';
 
 class Search extends Component {
     state = { //receives user input and renders images
-        searchText: '' //Created a value state
+        searchText: ''
     }
 
     onSearchChange = e => {
-        this.setState({ searchText: e.target.value });//Search on Search bar input
+        this.setState({
+            searchText: e.target.value
+        });//Search on Search bar input
     }
 
     handleSubmit = e => {
