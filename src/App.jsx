@@ -35,7 +35,7 @@ class App extends Component {
             <Navigation onClick={this.performSearch} />
             {this.state.isLoading ? (<p>Loading...</p>) : (
               <Switch>
-                <Route exact path="/" render={ (props) => <Redirect to="/search/" />} />
+                <Route exact path="/" render={ (props) => <Redirect to="/search/art" />} />
                 <Route path="/search/:searchword" exact component={(props) => {
                   const searchWord = props.match.params.searchword;
                   if(searchWord !== this.state.searchWord) {
@@ -55,15 +55,10 @@ class App extends Component {
       );
   }
 
-  componentDidMount(){
+  performSearch = (query = 'orangeflowers') => {
     this.setState({
       isLoading: true
     });
-  }
-
-  // const loadTrue = (this.setState({ isLoading: true }));
-
-  performSearch = (query = 'orangeflowers') => {
     const url = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`;
     
     axios.get(url)
