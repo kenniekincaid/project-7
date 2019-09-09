@@ -8,7 +8,7 @@ import Navigation from './components/Navigation.jsx';
 import Gallery from './components/Gallery.jsx';
 import FileNotFound from './components/FileNotFound.jsx';
 import axios from 'axios';
-import apiKey from './config.js';
+import apiKey from '../config.js';
 
 
 //APP STARTS
